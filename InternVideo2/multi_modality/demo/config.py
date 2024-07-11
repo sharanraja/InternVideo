@@ -13,8 +13,9 @@ from copy import deepcopy
 from importlib import import_module
 
 import yaml
+sys.path.append('/workspace/InternVideo2/multi_modality')
 
-from ..utils.easydict import EasyDict
+from multi_modality.utils.easydict import EasyDict
 
 __all__ = ["Config", "pretty_text"]
 

@@ -13,7 +13,6 @@ from einops import rearrange
 from .pos_embed import get_3d_sincos_pos_embed, get_2d_sincos_pos_embed, get_1d_sincos_pos_embed
 from .flash_attention_class import FlashAttention
 from flash_attn.modules.mlp import FusedMLP
-from flash_attn.ops.rms_norm import DropoutAddRMSNorm
 
 logger = logging.getLogger(__name__)
 
@@ -376,6 +375,7 @@ class InternVideo2(nn.Module):
         self.T = num_frames // tubelet_size
         
         if use_fused_rmsnorm:
+            from flash_attn.ops.rms_norm import DropoutAddRMSNorm
             norm_layer_for_blocks = partial(DropoutAddRMSNorm, eps=1e-6, prenorm=True)
         else:
             norm_layer_for_blocks = partial(RMSNorm, eps=1e-6)

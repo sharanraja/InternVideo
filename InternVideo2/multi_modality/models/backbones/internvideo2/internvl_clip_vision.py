@@ -13,8 +13,6 @@ try:
 except:
     from flash_attention_class import FlashAttention
 from flash_attn.modules.mlp import FusedMLP
-from flash_attn.ops.rms_norm import DropoutAddRMSNorm
-
 
 MODEL_PATH = 'your_model_path/internvl'
 _MODELS = {
@@ -383,6 +381,7 @@ class InternVL_CLIP(nn.Module):
         
         """ only use image encoder of InternVL """
         if use_fused_rmsnorm:
+            from flash_attn.ops.rms_norm import DropoutAddRMSNorm
             norm_layer_for_blocks = partial(DropoutAddRMSNorm, eps=1e-6, prenorm=True)
         else:
             norm_layer_for_blocks = partial(RMSNorm, eps=1e-6)

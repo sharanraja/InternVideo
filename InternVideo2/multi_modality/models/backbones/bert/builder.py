@@ -1,8 +1,10 @@
 from .xbert import BertConfig, BertForMaskedLM, BertLMHeadModel, BertModel
+from pathlib import Path
 
 import logging
 logger = logging.getLogger(__name__)
 
+BASE_PATH = Path('/workspace/InternVideo2/multi_modality')
 def build_bert(model_config, pretrain, checkpoint, encoder_width=None):
     """build text encoder.
 
@@ -14,7 +16,7 @@ def build_bert(model_config, pretrain, checkpoint, encoder_width=None):
     Returns: TODO
 
     """
-    bert_config = BertConfig.from_json_file(model_config.text_encoder.config)
+    bert_config = BertConfig.from_json_file(BASE_PATH / model_config.text_encoder.config)
     if encoder_width is None:
         bert_config.encoder_width = model_config.vision_encoder.d_model
     else:
